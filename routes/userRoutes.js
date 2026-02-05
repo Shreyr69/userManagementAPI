@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
     createUser,
     getUsers,
@@ -9,7 +10,6 @@ import {
 
 import { checkAuth } from "../middlewares/auth.js";
 import { validateUser } from "../middlewares/validateUser.js";
-
 
 const router = express.Router();
 

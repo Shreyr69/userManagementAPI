@@ -1,17 +1,25 @@
-let success = true;
+const HARDCODED_TOKEN = "mysecrettoken123";
 
 export const checkAuth = (req, res, next) => {
 
-    console.log("Checking Authentication...");
+    const authHeader = req.headers.authorization;
 
-    if (success) {
-        console.log("Auth Checked");
-        next(); 
-    } else {
-        console.log("Auth Failed");
-
+    if (!authHeader) {
         return res.status(401).json({
-            message: "Unauthorized - Auth Failed"
+            message: "Authorization header missing"
         });
     }
+
+    const token = authHeader.split(" ")[1];
+
+    if (token !== HARDCODED_TOKEN) {
+        return res.status(403).json({
+            message: "Invalid token"
+        });
+    }
+
+    console.log("Token verified");
+
+    next();
 };
+

@@ -132,3 +132,37 @@ export const deleteUser = (req, res) => {
         });
     }
 };
+
+
+export const validateUserById = (req, res) => {
+
+    try {
+        const { id } = req.body;
+
+        if (!id) {
+            return res.status(400).json({
+                message: "User ID is required"
+            });
+        }
+
+        const user = users.find(u => u.id == id);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        return res.status(200).json({
+            message: "User is valid",
+            data: user
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message
+        });
+    }
+};
+
