@@ -8,15 +8,15 @@ import {
 } from "../controllers/userController.js";
 
 import { checkAuth } from "../middlewares/auth.js";
+import { validateUser } from "../middlewares/validateUser.js";
+
 
 const router = express.Router();
 
-router.use(checkAuth);
-
-router.post("/", createUser);
-router.get("/", getUsers);
-router.get("/:id", getUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+router.post("/", checkAuth, validateUser, createUser);
+router.get("/", checkAuth, getUsers);
+router.get("/:id", checkAuth, getUser);
+router.put("/:id", checkAuth, validateUser, updateUser);
+router.delete("/:id", checkAuth, deleteUser);
 
 export default router;
