@@ -7,7 +7,11 @@ import {
     deleteUser
 } from "../controllers/userController.js";
 
+import { checkAuth } from "../middlewares/auth.js";
+
 const router = express.Router();
+
+router.use(checkAuth);
 
 router.post("/", createUser);
 router.get("/", getUsers);
