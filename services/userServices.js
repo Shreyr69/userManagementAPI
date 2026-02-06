@@ -1,49 +1,41 @@
-let users = [];
+import User from "../models/user.js";
 
 
-export const createUserService = (name, email) => {
+// CREATE USER
+export const createUserService = async (data) => {
 
-    const newUser = {
-        id: Date.now(),
-        name,
-        email
-    };
-
-    users.push(newUser);
+    const newUser = await User.create(data);
 
     return newUser;
 };
 
 
-export const getAllUsersService = () => {
-    return users;
+// GET ALL USERS
+export const getAllUsersService = async () => {
+    return await User.find();
 };
 
 
-export const updateUserService = (id, name, email) => {
-
-    const user = users.find(u => u.id == id);
-
-    if (!user) {
-        return null;
-    }
-
-    if (name) user.name = name;
-    if (email) user.email = email;
-
-    return user;
+// GET SINGLE USER
+export const getUserService = async (id) => {
+    return await User.findById(id);
 };
 
 
-export const deleteUserService = (id) => {
+// UPDATE USER
+export const updateUserService = async (id, data) => {
 
-    const userIndex = users.findIndex(u => u.id == id);
+    const updatedUser = await User.findByIdAndUpdate(
+        id,
+        data,
+        { new: true }
+    );
 
-    if (userIndex === -1) {
-        return null;
-    }
+    return updatedUser;
+};
 
-    const deletedUser = users.splice(userIndex, 1);
 
-    return deletedUser[0];
+// DELETE USER
+export const deleteUserService = async (id) => {
+    return await User.findByIdAndDelete(id);
 };

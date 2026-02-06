@@ -1,16 +1,16 @@
 export const validateUser = (req, res, next) => {
 
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
 
-    if (!name || !email) {
+    if (!name || !email || !password) {
         return res.status(400).json({
-            message: "Name and email are required"
+            message: "Name, email and password are required"
         });
     }
 
-    if (typeof name !== "string" || name.trim().length < 2) {
+    if (password.length < 6) {
         return res.status(400).json({
-            message: "Name must be at least 2 characters"
+            message: "Password must be at least 6 characters"
         });
     }
 
@@ -21,8 +21,6 @@ export const validateUser = (req, res, next) => {
             message: "Invalid email format"
         });
     }
-
-    console.log("Validation Passed");
 
     next();
 };
