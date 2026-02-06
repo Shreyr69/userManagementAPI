@@ -1,7 +1,6 @@
 import User from "../models/user.js";
 
 
-// CREATE USER
 export const createUserService = async (data) => {
 
     const newUser = await User.create(data);
@@ -10,19 +9,16 @@ export const createUserService = async (data) => {
 };
 
 
-// GET ALL USERS
 export const getAllUsersService = async () => {
     return await User.find();
 };
 
 
-// GET SINGLE USER
 export const getUserService = async (id) => {
     return await User.findById(id);
 };
 
 
-// UPDATE USER
 export const updateUserService = async (id, data) => {
 
     const updatedUser = await User.findByIdAndUpdate(
@@ -35,7 +31,13 @@ export const updateUserService = async (id, data) => {
 };
 
 
-// DELETE USER
 export const deleteUserService = async (id) => {
     return await User.findByIdAndDelete(id);
 };
+
+
+export const findUserByEmailService = async (email) => {
+    return await User.findOne({ email });
+};
+
+
