@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema(
     {
@@ -38,6 +39,18 @@ const userSchema = new mongoose.Schema(
     }
 
 );
+
+userSchema.pre("save", async function () {
+    console.log("HASHING PASSWORD");
+    if (!this.isModified("password")) {
+        return;
+    }
+    try {
+        this.password = await bcrypt.hash(this.password, 10);
+    } catch (error) {
+        throw new Error("Error hashing password: " + error.message);
+    }
+});
 
 const User = mongoose.model("User", userSchema);
 export default User;
